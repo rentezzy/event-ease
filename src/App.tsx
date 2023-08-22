@@ -1,5 +1,14 @@
-function App() {
-  return <div>a</div>;
-}
+import { Button } from "@mui/material";
+import { useAuth } from "./hooks/firebase/useAuth";
+import { SignInButton } from "./ui/SignInButton";
 
-export default App;
+export function App() {
+  const auth = useAuth();
+  if (!auth) return <></>;
+  return (
+    <div>
+      <SignInButton to="hello">Lets go</SignInButton>
+      <Button onClick={auth.signout}>SignOut</Button>
+    </div>
+  );
+}
