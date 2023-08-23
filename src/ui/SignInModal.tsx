@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -42,8 +41,11 @@ export const SignInModal = ({
 }) => {
   const auth = useAuth();
   useEffect(() => {
-    if (auth && auth.user) handleClose();
-  }, [auth, handleClose]);
+    if (open && auth && auth.user) {
+      handleClose();
+      onSuccess && onSuccess();
+    }
+  }, [open, auth, handleClose, onSuccess]);
   if (!auth) return;
 
   return (
@@ -80,9 +82,7 @@ export const SignInModal = ({
           <SignInSocials auth={auth} onSuccess={onSuccess} />
           <DialogContent sx={{ fontSize: "12px", paddingTop: 0 }}>
             Still don't have an account?
-            <Link>
-              <NavLink to={"/signup"}>Sign-up here!</NavLink>
-            </Link>
+            <NavLink to={"/signup"}>Sign-up here!</NavLink>
           </DialogContent>
         </div>
       </Dialog>
