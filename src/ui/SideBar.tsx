@@ -11,8 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/firebase/useAuth";
-import { Link, NavLink } from "react-router-dom";
 
 const navLinkStyles = ({ isActive }: { isActive: boolean }) => ({
   color: isActive ? "#fe7f2d" : "black",
