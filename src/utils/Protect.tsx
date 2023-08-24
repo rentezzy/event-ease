@@ -7,8 +7,7 @@ export function Protect({ children }: { children: React.ReactNode }) {
 
   if (!auth || auth.initializing) return null;
 
-  if (!auth.user)
-    return <Navigate to="/signup" state={{ from: location }} replace />;
+  if (!auth.user) return <Navigate to="/" state={{ from: location }} replace />;
 
   return children;
 }

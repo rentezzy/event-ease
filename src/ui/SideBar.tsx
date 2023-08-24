@@ -75,6 +75,9 @@ export const SideBar = () => {
             <NavLink to={"/chat"} style={navLinkStyles}>
               Messages
             </NavLink>
+            <NavLink to={"/invitations"} style={navLinkStyles}>
+              Invitations
+            </NavLink>
           </Stack>
           <Stack>
             <Divider />
