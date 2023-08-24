@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-
+import {} from "@mui/x-date-pickers/themeAugmentation";
 export const theme = createTheme({
   palette: {
     mode: "light",
@@ -56,6 +56,39 @@ export const theme = createTheme({
       fontSize: "14px",
       lineHeight: "1.5em",
       color: "#233D4D",
+    },
+  },
+  components: {
+    MuiDateCalendar: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+          "& .Mui-selected, & .Mui-selected:focus, & .Mui-selected:hover": {
+            color: `white !important`,
+          },
+        },
+
+        viewTransitionContainer: {
+          "& > div > div": {
+            justifyContent: "space-between !important",
+            width: "100%",
+            paddingLeft: "1.25em",
+            paddingRight: "1.25em",
+          },
+          "& div[role=row]": {
+            paddingLeft: "1.25em",
+            paddingRight: "1.25em",
+            justifyContent: "space-between !important",
+          },
+          "& div[role=presentation]": {
+            overflowX: "unset",
+            height: "100%",
+          },
+          "& div[role=rowgroup]": {
+            position: "unset",
+          },
+        },
+      },
     },
   },
 });
