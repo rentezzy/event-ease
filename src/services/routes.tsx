@@ -6,16 +6,24 @@ import { Protect } from "../utils/Protect";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Welcome />,
+    index: true,
+  },
+  {
+    path: "/",
+    element: (
+      <Protect>
+        <App />
+      </Protect>
+    ),
     children: [
-      { path: "welcome", element: <Welcome /> },
       {
         path: "calendar",
-        element: (
-          <Protect>
-            <Calendar />
-          </Protect>
-        ),
+        element: <Calendar />,
+      },
+      {
+        path: "new-event",
+        element: <h1></h1>,
       },
     ],
   },
