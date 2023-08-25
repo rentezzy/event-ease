@@ -72,6 +72,10 @@ export const SideBar = () => {
               New Event
             </NavLink>
             <Divider />
+            <NavLink to={"/contacts"} style={navLinkStyles}>
+              Contacts
+            </NavLink>
+            <Divider />
             <NavLink to={"/chat"} style={navLinkStyles}>
               Messages
             </NavLink>
