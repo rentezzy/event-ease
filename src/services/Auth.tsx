@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   createContext,
   useCallback,
@@ -38,14 +39,26 @@ export type TAuth = {
 const AuthContext = createContext<TAuth | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { auth } = useContext(FirebaseContext);
+  const { auth, firestore } = useContext(FirebaseContext);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-
-  const authChanged = useCallback((firebaseUser: User | null) => {
-    if (firebaseUser) setUser(firebaseUser);
-    setInitializing(false);
-  }, []);
+  const authChanged = useCallback(
+    (firebaseUser: User | null) => {
+      if (!firebaseUser) return;
+      setUser(firebaseUser);
+      const docRef = doc(firestore, "users", firebaseUser.uid);
+      getDoc(docRef).then((data) => {
+        if (data.exists()) return;
+        setDoc(docRef, {
+          avatar: firebaseUser.photoURL || "",
+          displayName: firebaseUser.displayName || "",
+          contacts: { friends: { name: "Friends", users: [] } },
+        });
+      });
+      setInitializing(false);
+    },
+    [firestore]
+  );
 
   useEffect(() => {
     const subscriber = onAuthStateChanged(auth, authChanged);
