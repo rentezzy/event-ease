@@ -1,7 +1,20 @@
-import { DocumentSnapshot, doc, getDoc, onSnapshot } from "firebase/firestore";
-import { useContext, useEffect, useMemo, useState, useCallback } from "react";
+import {
+  DocumentData,
+  DocumentSnapshot,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import FirebaseContext from "../../services/Firebase";
 import { TUser } from "../../types/user";
+import { assignTypes } from "../../utils/typeAssign";
+import { useAuth } from "../firebase/useAuth";
+import { useDebounce } from "../useDebounce";
 
 const defaultUser = {
   avatar: "",
@@ -41,27 +54,37 @@ export const useGetUser = (uid: string, hotUpdate = false) => {
 
   return { user, isLoading };
 };
-
-// FOR DEVELOPING:
-// setIsLoading(true);
-// setUser({
-//   avatar: "",
-//   displayName: "User",
-//   contacts: {
-//     friends: {
-//       name: "Friends",
-//       users: [
-//         "CHasfP6kYNVNILCCaP6DL3xbY303",
-//         "AH0iSKgpPncGUjncU1NNsmvigh63",
-//       ],
-//     },
-//     "a-90ishd-98ashd-9ashdkl": {
-//       name: "Family",
-//       users: [
-//         "CHasfP6kYNVNILCCaP6DL3xbY303",
-//         "AH0iSKgpPncGUjncU1NNsmvigh63",
-//       ],
-//     },
-//   },
-// });
-// setIsLoading(false);
+export const useGetUsersByName = (name: string) => {
+  const nameDebounced = useDebounce(name, 300);
+  const [users, setUsers] = useState<{ uid: string; displayName: string }[]>(
+    []
+  );
+  const auth = useAuth();
+  const { firestore } = useContext(FirebaseContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const q = useMemo(
+    () =>
+      query(
+        collection(firestore, "users").withConverter(assignTypes<TUser>()),
+        where("displayName", ">=", nameDebounced),
+        where("displayName", "<=", nameDebounced + "\uf8ff")
+      ),
+    [firestore, nameDebounced]
+  );
+  useEffect(() => {
+    setIsLoading(true);
+    getDocs<TUser, DocumentData>(q).then((data) => {
+      const items: { uid: string; displayName: string }[] = [];
+      data.forEach((user) => {
+        if (user.id === auth!.user!.uid) return;
+        items.push({
+          displayName: user.data().displayName,
+          uid: user.id,
+        });
+      });
+      setUsers(items);
+      setIsLoading(false);
+    });
+  }, [q, auth]);
+  return { users, isLoading };
+};
