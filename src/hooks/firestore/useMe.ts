@@ -26,7 +26,9 @@ export const useMeHelpers = () => {
   const addContact = useMemo(
     () =>
       contactHelper(
-        (contacts: string[], uid: string) => [...contacts, uid],
+        (contacts: string[], uid: string) => {
+          return contacts.includes(uid) ? contacts : [...contacts, uid];
+        },
         docRef,
         firestore
       ),

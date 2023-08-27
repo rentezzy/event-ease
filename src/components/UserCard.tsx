@@ -5,7 +5,15 @@ import { useGetUser } from "../hooks/firestore/useGetUser";
 import { useMeHelpers } from "../hooks/firestore/useMe";
 
 export const UserCard = memo(
-  ({ uid, isEditing }: { uid: string; isEditing: boolean }) => {
+  ({
+    uid,
+    isEditing,
+    group,
+  }: {
+    uid: string;
+    isEditing: boolean;
+    group: string;
+  }) => {
     const { user } = useGetUser(uid);
     const { removeContact } = useMeHelpers();
     return (
@@ -24,7 +32,7 @@ export const UserCard = memo(
         </Grid>
         {isEditing && (
           <Grid item>
-            <IconButton onClick={() => removeContact(uid, "friends")}>
+            <IconButton onClick={() => removeContact(uid, group)}>
               <ClearIcon />
             </IconButton>
           </Grid>

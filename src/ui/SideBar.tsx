@@ -68,19 +68,21 @@ export const SideBar = () => {
               Calendar
             </NavLink>
             <Divider />
+            <NavLink to={"/my-events"} style={navLinkStyles}>
+              My Events
+            </NavLink>
             <NavLink to={"/new-event"} style={navLinkStyles}>
               New Event
+            </NavLink>
+            <NavLink to={"/invitations"} style={navLinkStyles}>
+              Invitations
             </NavLink>
             <Divider />
             <NavLink to={"/contacts"} style={navLinkStyles}>
               Contacts
             </NavLink>
-            <Divider />
             <NavLink to={"/chat"} style={navLinkStyles}>
               Messages
-            </NavLink>
-            <NavLink to={"/invitations"} style={navLinkStyles}>
-              Invitations
             </NavLink>
           </Stack>
           <Stack>
