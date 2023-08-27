@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
 import { Calendar } from "../pages/calendar/Calendar";
 import { Contacts } from "../pages/contacts/Contacts";
+import { NewEvent } from "../pages/newEvent/NewEvent";
 import { Welcome } from "../pages/welcome/Welcome";
 import { Protect } from "../utils/Protect";
 export const router = createBrowserRouter([
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "new-event",
-        element: <h1></h1>,
+        element: <NewEvent />,
       },
       {
         path: "contacts",

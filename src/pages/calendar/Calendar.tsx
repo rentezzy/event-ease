@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { EventCard } from "../../components/EventCard";
 import { useAuth } from "../../hooks/firebase/useAuth";
-import { useGetEventsByDay } from "../../hooks/firestore/useGetEvents";
+import { useGetEventsByDay } from "../../hooks/firestore/useEvents";
 
 function Day(props: PickersDayProps<Dayjs>) {
   const { day, ...other } = props;

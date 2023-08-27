@@ -95,6 +95,7 @@ export const theme = createTheme({
 
 export const eventTheme = {
   default: {
+    name: "Default",
     primary: "#fe7f2d",
     background: "rgba(255, 223, 196, 0.36)",
   },
