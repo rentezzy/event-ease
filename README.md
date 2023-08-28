@@ -17,7 +17,7 @@ Features overwiev:
 - Enhanced Personalization: Customizable invitations and event pages allow hosts to create a unique and memorable experience for their guests.
 - Streamlined RSVPs: Real-time RSVP tracking helps hosts make better arrangements based on the expected number of attendees.
 
-The current stable hosted version is available at the [link](https://rentezzy.github.io/event-ease).
+The current stable hosted version is available at the [link]([https://rentezzy.github.io/event-ease](https://dbasen-ren.web.app/calendar)).
 
 Future features of the site:
 
