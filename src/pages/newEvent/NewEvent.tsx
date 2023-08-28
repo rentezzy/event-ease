@@ -36,7 +36,7 @@ const MenuProps = {
     },
   },
 };
-const schema = yup.object().shape({
+const schema: yup.ObjectSchema<TCreateEvent> = yup.object({
   invitationText: yup
     .string()
     .min(10, "Min length - 10 symbols")
@@ -49,7 +49,7 @@ const schema = yup.object().shape({
     .string()
     .min(10, "Min length - 10 symbols")
     .required("Description is required"),
-});
+}) as unknown as yup.ObjectSchema<TCreateEvent>;
 const selectTheme: React.ReactNode[] = [];
 for (const key in eventTheme) {
   selectTheme.push(

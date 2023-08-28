@@ -25,6 +25,7 @@ export type TCreateEvent = Omit<
   | "createdBy"
   | "createdAt"
   | "startAtDay"
+  | "eid"
 > & {
   startAt: Dayjs;
   endAt: Dayjs;
