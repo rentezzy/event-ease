@@ -61,3 +61,30 @@ export const useCreateEvent = () => {
   );
   return createEvent;
 };
+export const useGetMyEvents = () => {
+  const { firestore } = useContext(FirebaseContext);
+  const [events, setEvents] = useState<TEvent[]>([]);
+  const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const q = useMemo(
+    () =>
+      query(
+        collection(firestore, "eventease-events"),
+        where("createdBy", "==", auth!.user!.uid)
+      ),
+    [firestore, auth]
+  );
+  useEffect(() => {
+    setIsLoading(true);
+    const docs = getDocs(q);
+    docs.then((data) => {
+      const items: TEvent[] = [];
+      data.forEach((doc) => {
+        items.push(doc.data() as TEvent);
+      });
+      setIsLoading(false);
+      setEvents(items);
+    });
+  }, [firestore, q]);
+  return { events, isLoading };
+};

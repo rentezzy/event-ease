@@ -8,6 +8,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/chat": "Messages",
   "/invitations": "Invitations",
   "/contacts": "Сontacts",
+  "/my-events": "My events",
 };
 import logo from "../assets/logo.svg";
 interface LinkRouterProps extends LinkProps {
