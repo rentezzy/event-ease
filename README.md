@@ -1,27 +1,24 @@
-# React + TypeScript + Vite
+[![HitCount](https://hits.dwyl.com/rentezzy/event-ease.svg?style=flat-square)](http://hits.dwyl.com/rentezzy/event-ease)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/rentezzy/event-ease)
+[![Hits-of-Code](https://hitsofcode.com/github/rentezzy/event-ease)](https://hitsofcode.com/github/rentezzy/event-ease/view)
+![Static Badge](https://img.shields.io/badge/status-active-lime)
+![Static Badge](https://img.shields.io/badge/react-18.2.0-blue)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/rentezzy/event-ease)
+![Static Badge](https://img.shields.io/badge/site-working-lime?link=https%3A%2F%2Fbeast-beats-seller.store%2Fhome)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# ![EventEase)](https://github.com/rentezzy/event-ease/assets/123960679/ee6ae231-3753-40aa-9181-bc1acdc744a4)
 
-Currently, two official plugins are available:
+"Event Ease" - a pet project developed by me from scratch,is a convenient and easy-to-use service for planning and tracking upcoming events. The project is currently under development.
+Features overwiev:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User-Friendly: EventEase makes event planning and invitation management hassle-free for users of all ages and technological backgrounds.
+- Time and Cost Savings: The app eliminates the need for physical invitations, reduces paper waste, and streamlines the planning process.
+- Efficient Communication: Built-in messaging and notification features ensure clear communication between hosts and attendees.(in progress)
+- Enhanced Personalization: Customizable invitations and event pages allow hosts to create a unique and memorable experience for their guests.
+- Streamlined RSVPs: Real-time RSVP tracking helps hosts make better arrangements based on the expected number of attendees.
 
-## Expanding the ESLint configuration
+The current stable hosted version is available at the [link](https://rentezzy.github.io/event-ease).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Future features of the site:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- An advanced chat system for easy interaction between users.
