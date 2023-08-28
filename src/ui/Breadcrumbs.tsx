@@ -25,7 +25,7 @@ export const BreadcrumbsPage = () => {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs aria-label="breadcrumb" sx={{ marginLeft: 10 }}>
       <LinkRouter underline="hover" color="inherit" to="/">
         <Typography
           variant="subtitle1"

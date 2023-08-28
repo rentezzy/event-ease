@@ -74,6 +74,7 @@ export const theme = createTheme({
             width: "100%",
             paddingLeft: "1.25em",
             paddingRight: "1.25em",
+            boxSizing: "border-box",
           },
           "& div[role=row]": {
             paddingLeft: "1.25em",
