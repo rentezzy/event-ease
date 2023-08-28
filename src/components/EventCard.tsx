@@ -1,3 +1,5 @@
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -5,6 +7,7 @@ import {
   AccordionSummary,
   Divider,
   Grid,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -132,6 +135,50 @@ export const EventCardOwner = ({ event }: { event: TEvent }) => {
         </Stack>
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+export const EventCardInvitation = ({
+  event,
+  acceptInvite,
+  declineInvite,
+}: {
+  event: TEvent;
+  acceptInvite: (eid: string) => void;
+  declineInvite: (eid: string) => void;
+}) => {
+  const startTime = dayjs(event.startAt).format("MMM, DD. HH:MM");
+  const endTime = dayjs(event.endAt).format("MMM, DD. HH:MM");
+  return (
+    <div
+      style={{
+        width: "100%",
+        background: eventTheme[event.theme].background,
+        border: `1px solid ${eventTheme[event.theme].primary}`,
+        padding: "20px",
+      }}
+    >
+      <Grid container justifyContent="space-between" alignItems="center">
+        <Grid>
+          <Typography variant="body2">{event.title}</Typography>
+          <Typography variant="subtitle2">{event.description}</Typography>
+        </Grid>
+        <Grid>
+          <Typography variant="subtitle2">{startTime}</Typography>
+          <Typography variant="subtitle2">{endTime}</Typography>
+        </Grid>
+      </Grid>
+      <Divider sx={{ margin: "10px 0" }} />
+      <Typography variant="subtitle1">{event.invitationText}</Typography>
+      <Grid container justifyContent="end">
+        <IconButton onClick={() => acceptInvite(event.eid)}>
+          <DoneIcon color="success" />
+        </IconButton>
+        <IconButton onClick={() => declineInvite(event.eid)}>
+          <CloseIcon color="error" />
+        </IconButton>
+      </Grid>
+    </div>
   );
 };
 

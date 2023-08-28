@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs";
 import { eventTheme } from "../services/theme";
 
 export type TEvent = {
+  eid: string;
   invitationText: string;
   endAt: string;
   startAtDay: string;

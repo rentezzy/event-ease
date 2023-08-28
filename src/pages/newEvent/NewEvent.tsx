@@ -67,6 +67,7 @@ export const NewEvent = () => {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TCreateEvent>({
     defaultValues,
@@ -91,7 +92,10 @@ export const NewEvent = () => {
     setInviteItems(tempItems);
   }, [contacts]);
 
-  const onSubmit = handleSubmit((values) => createEvent(values));
+  const onSubmit = handleSubmit((values) => {
+    createEvent(values);
+    reset();
+  });
   return (
     <div>
       <div

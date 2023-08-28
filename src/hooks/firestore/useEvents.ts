@@ -2,8 +2,11 @@ import dayjs, { Dayjs } from "dayjs";
 import {
   addDoc,
   collection,
+  doc,
   getDocs,
+  onSnapshot,
   query,
+  runTransaction,
   serverTimestamp,
   where,
 } from "firebase/firestore";
@@ -21,7 +24,7 @@ export const useGetEventsByDay = (uid: string, day: Dayjs) => {
       query(
         collection(firestore, "eventease-events"),
         where("startAtDay", "==", day.format("DD/MM/YYYY")),
-        where("invited", "array-contains", uid)
+        where("accepted", "array-contains", uid)
       ),
     [firestore, day, uid]
   );
@@ -32,7 +35,7 @@ export const useGetEventsByDay = (uid: string, day: Dayjs) => {
     docs.then((data) => {
       const items: TEvent[] = [];
       data.forEach((doc) => {
-        items.push(doc.data() as TEvent);
+        items.push({ ...doc.data(), eid: doc.id } as TEvent);
       });
       setIsLoading(false);
       setData(items);
@@ -80,11 +83,74 @@ export const useGetMyEvents = () => {
     docs.then((data) => {
       const items: TEvent[] = [];
       data.forEach((doc) => {
-        items.push(doc.data() as TEvent);
+        items.push({ ...doc.data(), eid: doc.id } as TEvent);
       });
       setIsLoading(false);
       setEvents(items);
     });
   }, [firestore, q]);
   return { events, isLoading };
+};
+export const useGetEventsInvitations = () => {
+  const { firestore } = useContext(FirebaseContext);
+  const [invitations, setInvitations] = useState<TEvent[]>([]);
+  const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const q = useMemo(
+    () =>
+      query(
+        collection(firestore, "eventease-events"),
+        where("invited", "array-contains", auth!.user!.uid)
+      ),
+    [firestore, auth]
+  );
+  const acceptInvite = (eid: string) =>
+    runTransaction(firestore, async (transaction) => {
+      console.log(1);
+      console.log(eid);
+      const docRef = doc(firestore, "eventease-events", eid);
+      const document = await transaction.get(docRef);
+      if (!document.exists()) return;
+      const data = document.data();
+      if (
+        data.accepted.includes(auth!.user!.uid) ||
+        data.declined.includes(auth!.user!.uid)
+      )
+        return;
+      const invited = data.invited.filter(
+        (uid: string) => uid !== auth!.user!.uid
+      );
+      const accepted = [...data.accepted, auth!.user!.uid];
+      transaction.update(docRef, { invited, accepted });
+    });
+  const declineInvite = (eid: string) =>
+    runTransaction(firestore, async (transaction) => {
+      const docRef = doc(firestore, "eventease-events", eid);
+      const document = await transaction.get(docRef);
+      if (!document.exists()) return;
+      const data = document.data();
+      if (
+        data.accepted.includes(auth!.user!.uid) ||
+        data.declined.includes(auth!.user!.uid)
+      )
+        return;
+      const invited = data.invited.filter(
+        (uid: string) => uid !== auth!.user!.uid
+      );
+      const declined = [...data.declined, auth!.user!.uid];
+      transaction.update(docRef, { invited, declined });
+    });
+  useEffect(() => {
+    setIsLoading(true);
+    const docs = onSnapshot(q, (data) => {
+      const items: TEvent[] = [];
+      data.forEach((doc) => {
+        items.push({ ...doc.data(), eid: doc.id } as TEvent);
+      });
+      setIsLoading(false);
+      setInvitations(items);
+    });
+    return docs;
+  }, [firestore, q]);
+  return { invitations, isLoading, acceptInvite, declineInvite };
 };
